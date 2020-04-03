@@ -17,12 +17,20 @@
                 mobileUrl: null
             }
         },
+        sockets: {
+            connect: () => {
+                console.log('socket connected')
+            }
+        },
         components: {
             QRCode
         },
         created() {
+            // TODO: génération d'URL plus propre, via le router si possible
             this.mobileUrl = process.env.VUE_APP_PUBLIC_HOST +':'+ process.env.VUE_APP_PUBLIC_PORT + '/#/camera/' + ID(9)
-            console.log(this.mobileUrl)
+        },
+        mounted() {
+            console.log(this.$socket)
         }
     }
 </script>
