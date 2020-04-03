@@ -1,7 +1,8 @@
-// vue.config.js
 module.exports = {
-    // options...
-    devServer: {
-        disableHostCheck: true
-    }
+  "devServer": {
+    "disableHostCheck": true
+  },
+  "transpileDependencies": [
+    "vuetify"
+  ]
 }
