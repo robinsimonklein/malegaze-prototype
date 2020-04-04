@@ -50,7 +50,7 @@
         created() {
             // TODO: génération d'URL plus propre, via le router si possible
             this.mobileId = ID(9)
-            this.mobileUrl = process.env.VUE_APP_PUBLIC_HOST +':'+ process.env.VUE_APP_PUBLIC_PORT + '/#/camera/' + this.mobileId
+            this.mobileUrl = (process.env.VUE_APP_HTTPS === "true" ? 'https://' : 'http://') + process.env.VUE_APP_PUBLIC_HOST +':'+ process.env.VUE_APP_PUBLIC_PORT + '/#/camera/' + this.mobileId
             this.$store.commit('setMobileId', this.mobileId)
         },
         mounted() {

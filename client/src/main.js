@@ -7,11 +7,11 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
-console.log(window.location)
+const socketUrl = (process.env.VUE_APP_HTTPS === "true" ? 'https://' : 'http://') + process.env.VUE_APP_SERVER_HOST + ':' + process.env.VUE_APP_SERVER_PORT
 
 Vue.use(new VueSocketIO({
     debug: true,
-    connection: process.env.VUE_APP_SERVER_HOST + ':' + process.env.VUE_APP_SERVER_PORT,
+    connection: socketUrl,
     vuex: {
         store,
         actionPrefix: 'SOCKET_',
