@@ -2,22 +2,33 @@
     <div class="mobile-camera-controller">
         <v-form>
             <v-slider
-                    :label="'x : '+x"
-                    v-model="x"
-                    min="-10"
-                    max="10"
+                    :label="'Zoom : '+ focalLength +'mm'"
+                    v-model="focalLength"
+                    min="10"
+                    max="150"
+                    vertical
+            />
+            <p>Rotation</p>
+            <v-slider
+                    :label="'x : '+rotationX"
+                    v-model="rotationX"
+                    min="-1"
+                    max="1"
+                    step="0.1"
             />
             <v-slider
-                    :label="'y : '+y"
-                    v-model="y"
-                    min="-10"
-                    max="10"
+                    :label="'y : '+rotationY"
+                    v-model="rotationY"
+                    min="-0.2"
+                    max="0.2"
+                    step="0.02"
             />
             <v-slider
-                    :label="'z : '+z"
-                    v-model="z"
-                    min="-10"
-                    max="10"
+                    :label="'z: '+rotationZ"
+                    v-model="rotationZ"
+                    min="-1"
+                    max="1"
+                    step="0.1"
             />
         </v-form>
     </div>
@@ -28,9 +39,10 @@
         name: "MobileCameraControls",
         data() {
             return {
-                x: 0,
-                y: 0,
-                z: 0,
+                rotationX: 0,
+                rotationY: 0,
+                rotationZ: 0,
+                focalLength: 35,
                 absolute: null,
                 alpha: null,
                 beta: null,
@@ -44,7 +56,6 @@
         },
         methods: {
             emitPosition() {
-                console.log('test')
                 if(this.mobileId) {
                     this.$socket.emit('camera_position', {
                         x: this.x,
@@ -52,18 +63,37 @@
                         z: this.z,
                     })
                 }
+            },
+            emitRotation() {
+                if(this.mobileId) {
+                    this.$socket.emit('camera_rotation', {
+                        x: this.rotationX,
+                        y: -this.rotationY,
+                        z: this.rotationZ,
+                    })
+                }
+            },
+            emitEffect() {
+                if(this.mobileId) {
+                    this.$socket.emit('camera_effect', {
+                        focalLength: this.focalLength,
+                    })
+                }
             }
         },
         watch: {
-            x() {
-                this.emitPosition()
+            rotationX() {
+                this.emitRotation()
             },
-            y() {
-                this.emitPosition()
+            rotationY() {
+                this.emitRotation()
             },
-            z() {
-                this.emitPosition()
+            rotationZ() {
+                this.emitRotation()
             },
+            focalLength() {
+                this.emitEffect()
+            }
         }
 
     }

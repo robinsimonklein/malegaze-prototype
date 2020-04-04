@@ -42,4 +42,12 @@ io.on('connection', function (socket) {
         console.log(position)
         socket.to(socket.mobileRoom).emit('camera_position', position)
     })
+    socket.on('camera_rotation', (rotation) => {
+        console.log(rotation)
+        socket.to(socket.mobileRoom).emit('camera_rotation', rotation)
+    })
+    socket.on('camera_effect', (effect) => {
+        console.log(effect)
+        socket.to(socket.mobileRoom).emit('camera_effect', effect)
+    })
 });

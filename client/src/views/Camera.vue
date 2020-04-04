@@ -1,25 +1,8 @@
 <template>
-  <v-container class="camera">
+  <v-container fluid class="camera">
     <h1>Camera</h1>
       <template v-if="started">
-          <v-slider
-                  :label="'x : '+position.x"
-                  v-model="position.x"
-                  min="-10"
-                  max="10"
-          />
-          <v-slider
-                  :label="'y : '+position.y"
-                  v-model="position.y"
-                  min="-10"
-                  max="10"
-          />
-          <v-slider
-                  :label="'z : '+position.z"
-                  v-model="position.z"
-                  min="-10"
-                  max="10"
-          />
+          <CameraScene />
       </template>
       <template v-else>
           <QRCode v-if="mobileUrl" :url="mobileUrl"/>
@@ -33,6 +16,8 @@
     // @ is an alias to /src
     import QRCode from "../components/QRCode";
     import {ID} from "@/js/utils.js"
+    import CameraScene from "../components/CameraScene";
+
     export default {
         name: 'Camera',
         data() {
@@ -56,12 +41,10 @@
             },
             started_camera() {
                 this.started = true
-            },
-            camera_position(position) {
-                this.position = position
             }
         },
         components: {
+            CameraScene,
             QRCode
         },
         created() {
