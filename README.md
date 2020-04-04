@@ -24,7 +24,7 @@ mkcert localhost 127.0.0.1 ::1
 mkcert -install
 ````
 
-- Add the key and *pem* in `vue.config.js`
+- Add the *key* and *pem* in `vue.config.js`
 ```js
 https = {
     key: fs.readFileSync('./cert/localhost+3-key.pem'),
@@ -41,8 +41,30 @@ HTTPS=true
 ```bash
 yarn serve
 ```
+
+- (Optionnal) Mobile connection :
+    
+    - Transfer the `localhost.pem` file on your mobile (i.e. via AirDrop)
+    - Install the profile
+
 - Enjoy ! 🎉
 
 
 ### Server
 
+- Copy the `/cert` folder from `client` and past it in `server`
+
+- Add the *key* and *pem* in `app.js`
+```js
+server = https.createServer({
+    key: fs.readFileSync(`${__dirname}/cert/localhost+3-key.pem`, 'utf8'),
+    cert: fs.readFileSync(`${__dirname}/cert/localhost+3.pem`, 'utf8')
+}, app)
+```
+
+- Set HTTPS to `true` in `.env` file.
+````dotenv
+HTTPS=true
+````
+
+- Enjoy ! 🎉
