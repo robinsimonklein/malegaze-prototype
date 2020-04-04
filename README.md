@@ -6,11 +6,11 @@ Documentation : [here](./client/README.md)
 ## Server
 Documentation : [here](./server/README.md)
 
-## HTTPS Configuration for local development
+## 🔒 HTTPS Configuration for local development
 
 ### Client
 
-- 🔒 Use [mkcert](https://github.com/FiloSottile/mkcert) to generate local certificate in `/cert` folder.
+- Use [mkcert](https://github.com/FiloSottile/mkcert) to generate local certificate in `/cert` folder.
 ````bash
 # Create and go in /cert
 mkdir cert && cd cert
