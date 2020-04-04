@@ -7,7 +7,7 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
-console.log(process.env)
+console.log(window.location)
 
 Vue.use(new VueSocketIO({
     debug: true,

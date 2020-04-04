@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      mobileId: null
   },
   mutations: {
+      setMobileId (state, data) {
+          state.mobileId = data
+      }
   },
   actions: {
   },

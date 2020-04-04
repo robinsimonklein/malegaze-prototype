@@ -1,8 +1,31 @@
 <template>
-  <div class="camera">
+  <v-container class="camera">
     <h1>Camera</h1>
-      <QRCode v-if="mobileUrl" :url="mobileUrl"/>
-  </div>
+      <template v-if="started">
+          <v-slider
+                  :label="'x : '+position.x"
+                  v-model="position.x"
+                  min="-10"
+                  max="10"
+          />
+          <v-slider
+                  :label="'y : '+position.y"
+                  v-model="position.y"
+                  min="-10"
+                  max="10"
+          />
+          <v-slider
+                  :label="'z : '+position.z"
+                  v-model="position.z"
+                  min="-10"
+                  max="10"
+          />
+      </template>
+      <template v-else>
+          <QRCode v-if="mobileUrl" :url="mobileUrl"/>
+          <p>ID : {{ mobileId }}</p>
+      </template>
+  </v-container>
 </template>
 
 
@@ -14,12 +37,28 @@
         name: 'Camera',
         data() {
             return {
-                mobileUrl: null
+                started: false,
+                mobileId: null,
+                mobileUrl: null,
+                position: {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                }
             }
         },
         sockets: {
-            connect: () => {
-                console.log('socket connected')
+            connected: () => {
+                console.log('connecté')
+            },
+            disconnect: () => {
+                console.log('déconnecté')
+            },
+            started_camera() {
+                this.started = true
+            },
+            camera_position(position) {
+                this.position = position
             }
         },
         components: {
@@ -27,10 +66,14 @@
         },
         created() {
             // TODO: génération d'URL plus propre, via le router si possible
-            this.mobileUrl = process.env.VUE_APP_PUBLIC_HOST +':'+ process.env.VUE_APP_PUBLIC_PORT + '/#/camera/' + ID(9)
+            this.mobileId = ID(9)
+            this.mobileUrl = process.env.VUE_APP_PUBLIC_HOST +':'+ process.env.VUE_APP_PUBLIC_PORT + '/#/camera/' + this.mobileId
+            this.$store.commit('setMobileId', this.mobileId)
         },
         mounted() {
-            console.log(this.$socket)
+            this.$socket.emit('join_mobile_room', {
+                mobileId: this.mobileId
+            })
         }
     }
 </script>

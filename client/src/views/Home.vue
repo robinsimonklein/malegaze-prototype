@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <router-link to="Camera">Camera</router-link>
     </div>
 </template>
 
