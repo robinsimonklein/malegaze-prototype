@@ -1,20 +1,34 @@
+const fs = require('fs');
 const app = require('express')();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const http = require('http');
+const https = require('https');
 const consola = require('consola');
+require('dotenv').config()
 
-const port = 3000
+// Setup server
+let server;
+const port = process.env.PORT ? process.env.PORT : 3000
+if(process.env.HTTPS === "true"){
+    server = https.createServer({
+        key: fs.readFileSync(`${__dirname}/cert/robin.local+3-key.pem`, 'utf8'),
+        cert: fs.readFileSync(`${__dirname}/cert/robin.local+3.pem`, 'utf8')
+    }, app)
+}else{
+    server = http.createServer(app)
+}
 
+// Create io
+const io = require('socket.io')(server);
+
+// Server listen
 server.listen(port);
 
 consola.success({
-    message: 'Server listening on port :'+port,
+    message: 'Server listening on port '+port,
     badge: true
 })
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
+// io configuration
 
 io.on('connection', function (socket) {
     console.log('new connexion', socket.id)
