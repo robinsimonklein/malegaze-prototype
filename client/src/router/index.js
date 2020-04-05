@@ -10,6 +10,7 @@ const routes = [
         name: 'Home',
         component: Home
     },
+    // Camera
     {
         path: '/camera',
         name: 'Camera',
@@ -25,7 +26,17 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import('../views/MobileCamera.vue')
-    }
+    },
+    // Transitions
+    {
+        path: '/transitions',
+        name: 'Transitions',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('../views/Transitions.vue')
+    },
+
 ]
 
 const router = new VueRouter({

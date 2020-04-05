@@ -1,7 +1,28 @@
 <template>
-    <div class="home">
-        <router-link to="Camera">Camera</router-link>
-    </div>
+    <v-content>
+        <v-container class="home d-flex flex-column align-center justify-center fill-height" fluid>
+            <h1>Male Gaze - prototypes</h1>
+            <v-card
+                    class="mx-auto"
+                    tile
+            >
+                <v-list>
+                    <v-list-item @click="$router.push('Transitions')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-transition</v-icon>
+                        </v-list-item-icon>
+                        <span>Camera transitions</span>
+                    </v-list-item>
+                    <v-list-item @click="$router.push('Camera')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-cellphone</v-icon>
+                        </v-list-item-icon>
+                        <span>Mobile controls</span>
+                    </v-list-item>
+                </v-list>
+            </v-card>
+        </v-container>
+    </v-content>
 </template>
 
 <script>
@@ -9,6 +30,12 @@
 
     export default {
         name: 'Home',
-        components: {}
+        components: {},
     }
 </script>
+
+<style lang="scss">
+h1{
+    margin-bottom: 2rem;
+}
+</style>

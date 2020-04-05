@@ -16,7 +16,7 @@
     // @ is an alias to /src
     import QRCode from "../components/QRCode";
     import {ID} from "@/js/utils.js"
-    import CameraScene from "../components/CameraScene";
+    import CameraScene from "../components/Camera/CameraScene";
 
     export default {
         name: 'Camera',
