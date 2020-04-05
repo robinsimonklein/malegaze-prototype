@@ -26,17 +26,10 @@ var DeviceOrientationControls = function ( object ) {
 
     this.alphaOffset = 0; // radians
 
-    var onDeviceOrientationChangeEvent = function ( event ) {
 
-        scope.deviceOrientation = event;
-
-    };
-
-    var onScreenOrientationChangeEvent = function () {
-
-        scope.screenOrientation = window.orientation || 0;
-
-    };
+    this.setScreenOrientation = function (screenOrientation) {
+        scope.screenOrientation = screenOrientation || 0;
+    }
 
     // The angles alpha, beta and gamma form a set of intrinsic Tait-Bryan angles of type Z-X'-Y''
 
@@ -70,23 +63,7 @@ var DeviceOrientationControls = function ( object ) {
 
     };
 
-    this.disconnect = function () {
-
-        window.removeEventListener( 'orientationchange', onScreenOrientationChangeEvent, false );
-        window.removeEventListener( 'deviceorientation', onDeviceOrientationChangeEvent, false );
-
-        scope.enabled = false;
-
-    };
-
     this.update = function (orientation) {
-
-        /*
-        if ( scope.enabled === false ) return;
-
-        var device = scope.deviceOrientation;
-
-         */
 
         if ( orientation ) {
 
@@ -101,16 +78,6 @@ var DeviceOrientationControls = function ( object ) {
             setObjectQuaternion( scope.object.quaternion, alpha, beta, gamma, orient );
 
         }
-
-    };
-
-    this.updateScreenOrientation = function (screenOrientation) {
-        scope.screenOrientation = screenOrientation || 0;
-    }
-
-    this.dispose = function () {
-
-        scope.disconnect();
 
     };
 

@@ -83,7 +83,7 @@
             },
             screen_orientation(screenOrientation) {
                 if(this.controls){
-                    this.controls.updateScreenOrientation(screenOrientation)
+                    this.controls.setScreenOrientation(screenOrientation)
                 }
             }
         },

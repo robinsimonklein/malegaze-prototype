@@ -61,7 +61,7 @@ io.on('connection', function (socket) {
         socket.to(socket.mobileRoom).emit('camera_effect', effect)
     })
     socket.on('device_orientation', (orientation) => {
-        // console.log(orientation)
+        console.log(orientation)
         socket.to(socket.mobileRoom).emit('device_orientation', orientation)
     })
     socket.on('screen_orientation', (screenOrientation) => {

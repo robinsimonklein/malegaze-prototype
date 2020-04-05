@@ -12,7 +12,7 @@
                 <v-slider
                         :label="'Focale : '+ focalLength +'mm'"
                         v-model="focalLength"
-                        min="1"
+                        min="10"
                         max="150"
                         vertical
                 />
