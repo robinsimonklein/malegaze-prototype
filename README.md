@@ -16,7 +16,8 @@ Documentation : [here](./server/README.md)
 mkdir cert && cd cert
 
 # Generate certificate
-mkcert localhost 127.0.0.1 ::1
+# Replace [localip] by your machine's ip in your local netwotk
+mkcert localhost 127.0.0.1 [localip] ::1
 ````
 
 - Install the certificate on your machine.
@@ -27,8 +28,8 @@ mkcert -install
 - Add the *key* and *pem* in `vue.config.js`
 ```js
 https = {
-    key: fs.readFileSync('./cert/localhost+3-key.pem'),
-    cert: fs.readFileSync('./cert/localhost+3.pem'),
+    key: fs.readFileSync('./cert/localhost+4-key.pem'),
+    cert: fs.readFileSync('./cert/localhost+4.pem'),
 }
 ```
 
@@ -57,8 +58,8 @@ yarn serve
 - Add the *key* and *pem* in `app.js`
 ```js
 server = https.createServer({
-    key: fs.readFileSync(`${__dirname}/cert/localhost+3-key.pem`, 'utf8'),
-    cert: fs.readFileSync(`${__dirname}/cert/localhost+3.pem`, 'utf8')
+    key: fs.readFileSync(`${__dirname}/cert/localhost+4-key.pem`, 'utf8'),
+    cert: fs.readFileSync(`${__dirname}/cert/localhost+4.pem`, 'utf8')
 }, app)
 ```
 
