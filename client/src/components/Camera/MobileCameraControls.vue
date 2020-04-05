@@ -9,15 +9,13 @@
                 <p>gamma : {{ orientation.gamma }}</p>
             </div>
             <div class="col-6">
-                <v-form>
-                    <v-slider
-                            :label="'Focale : '+ focalLength +'mm'"
-                            v-model="focalLength"
-                            min="10"
-                            max="150"
-                            vertical
-                    />
-                </v-form>
+                <v-slider
+                        :label="'Focale : '+ focalLength +'mm'"
+                        v-model="focalLength"
+                        min="1"
+                        max="150"
+                        vertical
+                />
             </div>
         </div>
     </div>
@@ -61,7 +59,11 @@
                     this.$socket.emit('screen_orientation', this.screenOrientation)
                 }
             },
-
+            listenOrientation() {
+                this.orientationPermission = true
+                window.addEventListener( 'orientationchange', this.onScreenOrientationChangeEvent, false );
+                window.addEventListener( 'deviceorientation', this.onDeviceOrientationChangeEvent, false );
+            },
             onScreenOrientationChangeEvent() {
                 this.screenOrientation = window.orientation || 0
                 this.emitScreenOrientation()
@@ -70,40 +72,28 @@
                 this.orientation.alpha = e.alpha;
                 this.orientation.beta = e.beta;
                 this.orientation.gamma = e.gamma;
+                this.emitOrientation();
             },
             motionRequest() {
-                // iOS 13+
-
                 if (typeof DeviceOrientationEvent.requestPermission === 'function' ) {
+                    // iOS 13+
 
                     DeviceOrientationEvent.requestPermission().then( ( response ) => {
 
                         if ( response == 'granted' ) {
-                            this.orientationPermission = true
-                            window.addEventListener( 'orientationchange', this.onScreenOrientationChangeEvent, false );
-                            window.addEventListener( 'deviceorientation', this.onDeviceOrientationChangeEvent, false );
-
+                            this.listenOrientation()
                         }
 
                     } ).catch( function ( error ) {
-
                         console.error( 'THREE.DeviceOrientationControls: Unable to use DeviceOrientation API:', error );
-
                     } );
 
                 } else {
+                    // Other devices
 
-                    this.orientationPermission = true
-                    window.addEventListener( 'orientationchange', this.onScreenOrientationChangeEvent, false );
-                    window.addEventListener( 'deviceorientation', this.onDeviceOrientationChangeEvent, false );
-
+                    this.listenOrientation()
                 }
             },
-            stream() {
-                requestAnimationFrame(this.stream)
-
-                this.emitOrientation()
-            }
         },
         watch: {
             focalLength() {
@@ -111,12 +101,8 @@
             }
         },
         mounted() {
-            this.stream()
+
         }
 
     }
 </script>
-
-<style scoped>
-
-</style>
