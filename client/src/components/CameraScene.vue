@@ -73,37 +73,38 @@
             }
         },
         sockets: {
-            camera_position(position) {
-                this.cameraSettings.position = position
-            },
-            camera_rotation(rotation) {
-                this.cameraSettings.rotation.x = 0 + rotation.x
-                this.cameraSettings.rotation.y = -0.7 + rotation.y
-                this.cameraSettings.rotation.z = 0 + rotation.z
-            },
             camera_effect(effect) {
                 this.effectController.focalLength = effect.focalLength
 
                 this.matChanger()
-                // this.effectController.focalDepth = effect.focalDepth
-                // this.effectController.fstop = effect.fstop
             },
             device_orientation(orientation) {
                 this.cameraSettings.orientation = orientation
+            },
+            screen_orientation(screenOrientation) {
+                if(this.controls){
+                    this.controls.updateScreenOrientation(screenOrientation)
+                }
             }
         },
         methods: {
             init() {
+                // Renderer
                 this.renderer = new THREE.WebGLRenderer();
                 this.renderer.setSize( window.innerWidth, window.innerHeight );
                 this.renderer.shadowMap.enabled = true;
                 this.$refs.cameraScene.appendChild(this.renderer.domElement)
 
+                // Fog
                 this.scene = new THREE.Scene();
                 this.scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );
-                this.camera = new CinematicCamera( 30, window.innerWidth/window.innerHeight, 0.1, 500 );
-                // this.camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 500 );
 
+                // Camera
+                this.camera = new CinematicCamera( 30, window.innerWidth/window.innerHeight, 0.1, 500 );
+                this.camera.position.set(this.cameraSettings.position.x, this.cameraSettings.position.y, this.cameraSettings.position.z)
+                this.camera.rotation.set(this.cameraSettings.rotation.x, this.cameraSettings.rotation.y, this.cameraSettings.rotation.z)
+
+                // Lights
                 this.light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
                 this.light.position.set( 0, 200, 0 );
                 this.scene.add( this.light );
@@ -117,7 +118,7 @@
                 this.light.shadow.camera.right = 120;
                 this.scene.add( this.light );
 
-
+                // Load scene
                 var loader = new GLTFLoader();
 
                 loader.load( './models/scene.gltf', ( gltf ) => {
@@ -135,31 +136,12 @@
                 this.stats = new Stats();
                 this.$refs.cameraScene.appendChild( this.stats.dom );
 
-
-                this.camera.position.set(this.cameraSettings.position.x, this.cameraSettings.position.y, this.cameraSettings.position.z)
-                this.camera.rotation.set(this.cameraSettings.rotation.x, this.cameraSettings.rotation.y, this.cameraSettings.rotation.z)
-
-
                 // Controls
-
                 this.controls = new DeviceOrientationControls( this.camera );
+                this.controls.update(this.cameraSettings.orientation)
 
-                // GUI
-                /*
-
-                this.gui = new GUI();
-
-                this.gui.add( this.effectController, 'focalLength', 1, 135, 0.01 ).onChange( this.matChanger );
-                this.gui.add( this.effectController, 'fstop', 1.8, 22, 0.01 ).onChange( this.matChanger );
-                this.gui.add( this.effectController, 'focalDepth', 0.1, 100, 0.001 ).onChange( this.matChanger );
-                this.gui.add( this.effectController, 'showFocus', true ).onChange( this.matChanger );
-
-                 */
 
                 this.matChanger();
-
-
-                this.controls.update(this.cameraSettings.orientation)
 
                 this.animate()
 
@@ -170,8 +152,6 @@
                 this.stats.update();
 
                 this.controls.update(this.cameraSettings.orientation)
-
-                // this.camera.rotation.set(this.cameraSettings.rotation.x, this.cameraSettings.rotation.y, this.cameraSettings.rotation.z)
 
                  this.camera.focusAt( this.cameraSettings.focusDistance );
 
@@ -203,22 +183,8 @@
 
             },
         },
-        watch: {
-            /*
-            effectController: {
-                handler(){
-                    console.log('matChanger')
-                    this.matChanger()
-                },
-                deep: true
-            }
-
-             */
-
-        },
         mounted() {
             this.init();
-            // this.animate();
         }
     }
 </script>

@@ -1,41 +1,25 @@
 <template>
     <div class="mobile-camera-controller">
-        <v-btn @click="motionRequest">Motion</v-btn>
-        <p>Orientation permission : {{ orientationPermission }}</p>
-        <p>alpha : {{ orientation.alpha }}</p>
-        <p>beta : {{ orientation.beta }}</p>
-        <p>gamma : {{ orientation.gamma }}</p>
-        <v-form>
-            <v-slider
-                    :label="'Focale : '+ focalLength +'mm'"
-                    v-model="focalLength"
-                    min="10"
-                    max="150"
-                    vertical
-            />
-            <p>Rotation</p>
-            <v-slider
-                    :label="'x : '+rotationX"
-                    v-model="rotationX"
-                    min="-1"
-                    max="1"
-                    step="0.1"
-            />
-            <v-slider
-                    :label="'y : '+rotationY"
-                    v-model="rotationY"
-                    min="-0.2"
-                    max="0.2"
-                    step="0.02"
-            />
-            <v-slider
-                    :label="'z: '+rotationZ"
-                    v-model="rotationZ"
-                    min="-1"
-                    max="1"
-                    step="0.1"
-            />
-        </v-form>
+        <div class="row">
+            <div class="col-6">
+                <v-btn @click="motionRequest">Motion Permission</v-btn>
+                <p>Orientation permission : {{ orientationPermission }}</p>
+                <p>alpha : {{ orientation.alpha }}</p>
+                <p>beta : {{ orientation.beta }}</p>
+                <p>gamma : {{ orientation.gamma }}</p>
+            </div>
+            <div class="col-6">
+                <v-form>
+                    <v-slider
+                            :label="'Focale : '+ focalLength +'mm'"
+                            v-model="focalLength"
+                            min="10"
+                            max="150"
+                            vertical
+                    />
+                </v-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -44,19 +28,13 @@
         name: "MobileCameraControls",
         data() {
             return {
-                rotationX: 0,
-                rotationY: 0,
-                rotationZ: 0,
                 focalLength: 35,
-                absolute: null,
-                alpha: null,
-                beta: null,
-                gamma: null,
                 orientation: {
                     alpha: 0,
                     beta: 0,
                     gamma: 0,
                 },
+                screenOrientation: 0,
                 orientationPermission: false
             }
         },
@@ -66,24 +44,6 @@
             }
         },
         methods: {
-            emitPosition() {
-                if(this.mobileId) {
-                    this.$socket.emit('camera_position', {
-                        x: this.x,
-                        y: this.y,
-                        z: this.z,
-                    })
-                }
-            },
-            emitRotation() {
-                if(this.mobileId) {
-                    this.$socket.emit('camera_rotation', {
-                        x: this.rotationX,
-                        y: -this.rotationY,
-                        z: this.rotationZ,
-                    })
-                }
-            },
             emitEffect() {
                 if(this.mobileId) {
                     this.$socket.emit('camera_effect', {
@@ -91,9 +51,20 @@
                     })
                 }
             },
+            emitOrientation() {
+                if(this.mobileId) {
+                    this.$socket.emit('device_orientation', this.orientation)
+                }
+            },
+            emitScreenOrientation() {
+                if(this.mobileId) {
+                    this.$socket.emit('screen_orientation', this.screenOrientation)
+                }
+            },
 
             onScreenOrientationChangeEvent() {
-
+                this.screenOrientation = window.orientation || 0
+                this.emitScreenOrientation()
             },
             onDeviceOrientationChangeEvent(e) {
                 this.orientation.alpha = e.alpha;
@@ -131,19 +102,10 @@
             stream() {
                 requestAnimationFrame(this.stream)
 
-                this.$socket.emit('device_orientation', this.orientation)
+                this.emitOrientation()
             }
         },
         watch: {
-            rotationX() {
-                this.emitRotation()
-            },
-            rotationY() {
-                this.emitRotation()
-            },
-            rotationZ() {
-                this.emitRotation()
-            },
             focalLength() {
                 this.emitEffect()
             }

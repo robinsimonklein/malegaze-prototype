@@ -1,8 +1,5 @@
 <template>
     <v-app>
-        <v-system-bar>
-
-        </v-system-bar>
         <v-content>
             <router-view/>
         </v-content>

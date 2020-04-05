@@ -56,20 +56,16 @@ io.on('connection', function (socket) {
         socket.in(socket.mobileRoom).emit('started_camera')
     })
 
-    socket.on('camera_position', (position) => {
-        console.log(position)
-        socket.to(socket.mobileRoom).emit('camera_position', position)
-    })
-    socket.on('camera_rotation', (rotation) => {
-        console.log(rotation)
-        socket.to(socket.mobileRoom).emit('camera_rotation', rotation)
-    })
     socket.on('camera_effect', (effect) => {
         console.log(effect)
         socket.to(socket.mobileRoom).emit('camera_effect', effect)
     })
     socket.on('device_orientation', (orientation) => {
-        console.log(orientation)
+        // console.log(orientation)
         socket.to(socket.mobileRoom).emit('device_orientation', orientation)
+    })
+    socket.on('screen_orientation', (screenOrientation) => {
+        console.log(screenOrientation)
+        socket.to(socket.mobileRoom).emit('screen_orientation', screenOrientation)
     })
 });
