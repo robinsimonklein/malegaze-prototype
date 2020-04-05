@@ -18,7 +18,11 @@ if(process.env.HTTPS === "true"){
 }
 
 // Create io
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+    origins: `${process.env.PUBLIC_HOST}:* http://${process.env.PUBLIC_HOST}:* https://${process.env.PUBLIC_HOST}:* ` +
+            'localhost:* http://localhost:* https://localhost:* ' +
+            '127.0.0.1:* http://127.0.0.1:* https://127.0.0.1:* '
+});
 
 // Server listen
 server.listen(port);
@@ -63,5 +67,9 @@ io.on('connection', function (socket) {
     socket.on('camera_effect', (effect) => {
         console.log(effect)
         socket.to(socket.mobileRoom).emit('camera_effect', effect)
+    })
+    socket.on('device_orientation', (orientation) => {
+        console.log(orientation)
+        socket.to(socket.mobileRoom).emit('device_orientation', orientation)
     })
 });

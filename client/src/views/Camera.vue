@@ -41,7 +41,7 @@
             },
             started_camera() {
                 this.started = true
-            }
+            },
         },
         components: {
             CameraScene,

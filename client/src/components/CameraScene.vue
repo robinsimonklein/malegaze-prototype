@@ -1,6 +1,6 @@
 <template>
     <div class="camera-scene" ref="cameraScene">
-
+       <!-- ><v-btn v-if="!renderer" @click="init">init</v-btn> -->
     </div>
 </template>
 
@@ -11,6 +11,7 @@
     import Stats from 'three/examples/jsm/libs/stats.module'
     // import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
     import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
+    import { DeviceOrientationControls } from '@/js/DeviceOrientationControls'
 
     export default {
         name: "CameraScene",
@@ -31,6 +32,11 @@
                         x: 0,
                         y: -0.7,
                         z: 0,
+                    },
+                    orientation: {
+                        alpha: 0,
+                        beta: 0,
+                        gamma: 0,
                     },
                     focusDistance: 0
                 },
@@ -81,6 +87,9 @@
                 this.matChanger()
                 // this.effectController.focalDepth = effect.focalDepth
                 // this.effectController.fstop = effect.fstop
+            },
+            device_orientation(orientation) {
+                this.cameraSettings.orientation = orientation
             }
         },
         methods: {
@@ -91,7 +100,7 @@
                 this.$refs.cameraScene.appendChild(this.renderer.domElement)
 
                 this.scene = new THREE.Scene();
-                // this.scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );
+                this.scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );
                 this.camera = new CinematicCamera( 30, window.innerWidth/window.innerHeight, 0.1, 500 );
                 // this.camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 500 );
 
@@ -131,6 +140,9 @@
                 this.camera.rotation.set(this.cameraSettings.rotation.x, this.cameraSettings.rotation.y, this.cameraSettings.rotation.z)
 
 
+                // Controls
+
+                this.controls = new DeviceOrientationControls( this.camera );
 
                 // GUI
                 /*
@@ -146,15 +158,22 @@
 
                 this.matChanger();
 
+
+                this.controls.update(this.cameraSettings.orientation)
+
+                this.animate()
+
             },
             animate() {
                 requestAnimationFrame( this.animate );
 
                 this.stats.update();
 
-                this.camera.rotation.set(this.cameraSettings.rotation.x, this.cameraSettings.rotation.y, this.cameraSettings.rotation.z)
+                this.controls.update(this.cameraSettings.orientation)
 
-                this.camera.focusAt( this.cameraSettings.focusDistance );
+                // this.camera.rotation.set(this.cameraSettings.rotation.x, this.cameraSettings.rotation.y, this.cameraSettings.rotation.z)
+
+                 this.camera.focusAt( this.cameraSettings.focusDistance );
 
                 if ( this.camera.postprocessing.enabled ) {
 
@@ -199,7 +218,7 @@
         },
         mounted() {
             this.init();
-            this.animate();
+            // this.animate();
         }
     }
 </script>

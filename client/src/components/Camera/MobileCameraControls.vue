@@ -1,8 +1,13 @@
 <template>
     <div class="mobile-camera-controller">
+        <v-btn @click="motionRequest">Motion</v-btn>
+        <p>Orientation permission : {{ orientationPermission }}</p>
+        <p>alpha : {{ orientation.alpha }}</p>
+        <p>beta : {{ orientation.beta }}</p>
+        <p>gamma : {{ orientation.gamma }}</p>
         <v-form>
             <v-slider
-                    :label="'Zoom : '+ focalLength +'mm'"
+                    :label="'Focale : '+ focalLength +'mm'"
                     v-model="focalLength"
                     min="10"
                     max="150"
@@ -47,6 +52,12 @@
                 alpha: null,
                 beta: null,
                 gamma: null,
+                orientation: {
+                    alpha: 0,
+                    beta: 0,
+                    gamma: 0,
+                },
+                orientationPermission: false
             }
         },
         computed: {
@@ -79,6 +90,48 @@
                         focalLength: this.focalLength,
                     })
                 }
+            },
+
+            onScreenOrientationChangeEvent() {
+
+            },
+            onDeviceOrientationChangeEvent(e) {
+                this.orientation.alpha = e.alpha;
+                this.orientation.beta = e.beta;
+                this.orientation.gamma = e.gamma;
+            },
+            motionRequest() {
+                // iOS 13+
+
+                if (typeof DeviceOrientationEvent.requestPermission === 'function' ) {
+
+                    DeviceOrientationEvent.requestPermission().then( ( response ) => {
+
+                        if ( response == 'granted' ) {
+                            this.orientationPermission = true
+                            window.addEventListener( 'orientationchange', this.onScreenOrientationChangeEvent, false );
+                            window.addEventListener( 'deviceorientation', this.onDeviceOrientationChangeEvent, false );
+
+                        }
+
+                    } ).catch( function ( error ) {
+
+                        console.error( 'THREE.DeviceOrientationControls: Unable to use DeviceOrientation API:', error );
+
+                    } );
+
+                } else {
+
+                    this.orientationPermission = true
+                    window.addEventListener( 'orientationchange', this.onScreenOrientationChangeEvent, false );
+                    window.addEventListener( 'deviceorientation', this.onDeviceOrientationChangeEvent, false );
+
+                }
+            },
+            stream() {
+                requestAnimationFrame(this.stream)
+
+                this.$socket.emit('device_orientation', this.orientation)
             }
         },
         watch: {
@@ -94,6 +147,9 @@
             focalLength() {
                 this.emitEffect()
             }
+        },
+        mounted() {
+            this.stream()
         }
 
     }
