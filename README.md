@@ -1,9 +1,13 @@
 # Male Gaze - Prototype
 
-## Client
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c40231ef-2a8d-488f-bdb8-0cefcd55602e/deploy-status)](https://app.netlify.com/sites/malegaze-prototype/deploys)
+
+## Installation
+
+### Client
 Documentation : [here](./client/README.md)
 
-## Server
+### Server
 Documentation : [here](./server/README.md)
 
 ## 🔒 HTTPS Configuration for local development
