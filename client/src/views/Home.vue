@@ -19,6 +19,12 @@
                         </v-list-item-icon>
                         <span>Mobile controls</span>
                     </v-list-item>
+                    <v-list-item @click="$router.push('Video')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-filmstrip</v-icon>
+                        </v-list-item-icon>
+                        <span>Video</span>
+                    </v-list-item>
                 </v-list>
             </v-card>
         </v-container>
