@@ -8,6 +8,7 @@ require('dotenv').config()
 // Setup server
 let server;
 const port = process.env.PORT ? process.env.PORT : 3000
+console.log(process.env.NODE_ENV)
 if(process.env.HTTPS === "true" && process.env.NODE_ENV === 'development'){
     server = https.createServer({
         key: fs.readFileSync(`${__dirname}/cert/robin.local+3-key.pem`, 'utf8'),
