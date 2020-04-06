@@ -1,6 +1,17 @@
 <template>
     <v-content>
         <v-container class="home d-flex flex-column align-center justify-center fill-height" fluid>
+            <v-alert
+                    outlined
+                    color="warning"
+                    text
+                    class="text-center"
+            >
+                Si la partie de mobile ne fonctionne pas la première fois, patientez 30-40 secondes et rééssayez.<br>
+
+                (Serveur hébergé gratuitement sur Heroku)
+            </v-alert>
+
             <h1>Male Gaze - prototypes</h1>
             <v-card
                     class="mx-auto"
@@ -42,6 +53,7 @@
 
 <style lang="scss">
 h1{
+    margin-top: 2rem;
     margin-bottom: 2rem;
 }
 </style>
