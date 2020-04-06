@@ -17,6 +17,8 @@ if(process.env.HTTPS === "true" && process.env.NODE_ENV === 'development'){
     server = http.createServer(app)
 }
 
+console.log(process.env.PUBLIC_HOST)
+
 // Create io
 const io = require('socket.io')(server, {
     origins: `${process.env.PUBLIC_HOST}:* http://${process.env.PUBLIC_HOST}:* https://${process.env.PUBLIC_HOST}:* ` +
