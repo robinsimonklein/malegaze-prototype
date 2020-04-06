@@ -7,7 +7,7 @@
                     text
                     class="text-center"
             >
-                Si la partie de mobile ne fonctionne pas la première fois, patientez 30-40 secondes et rééssayez.<br>
+                Si la partie de mobile ne fonctionne pas la première fois, patientez 30-40 secondes et rechargez la page.<br>
 
                 (Serveur hébergé gratuitement sur Heroku)
             </v-alert>

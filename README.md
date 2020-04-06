@@ -2,6 +2,8 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c40231ef-2a8d-488f-bdb8-0cefcd55602e/deploy-status)](https://app.netlify.com/sites/malegaze-prototype/deploys)
 
+Demo here : [https://malegaze-prototype.netlify.com](https://malegaze-prototype.netlify.com/)
+
 ## Installation
 
 ### Client
