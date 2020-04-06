@@ -12,7 +12,7 @@ const socketUrl = (process.env.VUE_APP_HTTPS === "true" ? 'https://' : 'http://'
 console.log(socketUrl)
 
 Vue.use(new VueSocketIO({
-    debug: true,
+    debug: process.env.NODE_ENV === 'development',
     connection: socketUrl,
     vuex: {
         store,

@@ -1,2 +1,1 @@
-web:cd /server && yarn
-web:yarn prod
+web:cd /server && yarn prod

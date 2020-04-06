@@ -5,7 +5,8 @@
   "author": "Robin Simonklein",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "prod": "node app.js"
   },
   "dependencies": {
     "consola": "^2.11.3",

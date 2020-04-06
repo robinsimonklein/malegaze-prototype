@@ -9,3 +9,8 @@ yarn install
 ```
 yarn dev
 ```
+
+### Compiles and serve for production
+```
+yarn prod
+```
