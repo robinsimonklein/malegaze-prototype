@@ -4,13 +4,46 @@
 
 Demo here : [https://malegaze-prototype.netlify.com](https://malegaze-prototype.netlify.com/)
 
-## Installation
+## Installation & setup
 
 ### Client
-Documentation : [here](./client/README.md)
+Go to `client` folder and run these commands :
+
+#### Install dependencies
+```
+yarn install
+```
+
+#### Compiles and hot-reloads for development
+```
+yarn serve
+```
+
+#### Compiles and minifies for production
+```
+yarn build
+```
+
+(Full documentation for client : [here](./client/README.md))
 
 ### Server
-Documentation : [here](./server/README.md)
+Go to `server` folder and run these commands :
+#### Install dependencies
+```
+yarn install
+```
+
+#### Compiles and hot-reloads for development
+```
+yarn dev
+```
+
+#### Compiles and serve for production
+```
+yarn prod
+```
+
+(Full documentation for server : [here](./server/README.md))
 
 ## 🔒 HTTPS Configuration for local development
 
@@ -60,6 +93,8 @@ yarn serve
 ### Server
 
 - Copy the `/cert` folder from `client` and past it in `server`
+
+⋅⋅⋅See [here](#client-1) how to create the certificate.
 
 - Add the *key* and *pem* in `app.js`
 ```js
