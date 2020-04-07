@@ -12,5 +12,5 @@ yarn dev
 
 ### Compiles and serve for production
 ```
-yarn prod
+yarn start
 ```
