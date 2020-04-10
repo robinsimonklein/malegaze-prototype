@@ -7,7 +7,7 @@
                     text
                     class="text-center"
             >
-                Si la partie de mobile ne fonctionne pas la première fois, patientez 30-40 secondes et rechargez la page.<br>
+                Si la connexion au mobile ne fonctionne pas la première fois, patientez 30-40 secondes et rechargez la page.<br>
 
                 (Serveur hébergé gratuitement sur Heroku)
             </v-alert>
@@ -35,6 +35,30 @@
                             <v-icon>mdi-filmstrip</v-icon>
                         </v-list-item-icon>
                         <span>Video</span>
+                    </v-list-item>
+                    <v-list-item @click="$router.push('GLTF')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-import</v-icon>
+                        </v-list-item-icon>
+                        <span>Import glTF</span>
+                    </v-list-item>
+                    <v-list-item @click="$router.push('DAE')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-import</v-icon>
+                        </v-list-item-icon>
+                        <span>Import DAE</span>
+                    </v-list-item>
+                    <v-list-item @click="$router.push('OBJ')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-import</v-icon>
+                        </v-list-item-icon>
+                        <span>Import OBJ</span>
+                    </v-list-item>
+                    <v-list-item @click="$router.push('FBX')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-import</v-icon>
+                        </v-list-item-icon>
+                        <span>Import FBX</span>
                     </v-list-item>
                 </v-list>
             </v-card>

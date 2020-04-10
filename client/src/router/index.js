@@ -45,6 +45,51 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import('../views/Video.vue')
     },
+    // dae
+    {
+        path: '/dae',
+        name: 'DAE',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('../views/DAE.vue')
+    },
+    // obj
+    {
+        path: '/obj',
+        name: 'OBJ',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('../views/OBJ.vue')
+    },
+    // fbx
+    {
+        path: '/fbx',
+        name: 'FBX',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('../views/FBX.vue')
+    },
+    // fbx2
+    {
+        path: '/fbx2',
+        name: 'FBX2',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('../views/FBX2.vue')
+    },
+    // glTF
+    {
+        path: '/gltf',
+        name: 'GLTF',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('../views/GLTF.vue')
+    },
 
 ]
 

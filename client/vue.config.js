@@ -9,6 +9,7 @@ if(process.env.VUE_APP_HTTPS === "true" && process.env.NODE_ENV === 'development
     }
 }
 
+
 module.exports = {
     "devServer": {
         "disableHostCheck": true,
